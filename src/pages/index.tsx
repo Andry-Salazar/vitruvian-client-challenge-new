@@ -1,15 +1,17 @@
 import type { NextPage } from 'next';
-import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useContext } from 'react';
 import { useState, useEffect } from 'react';
 import Table from 'react-bootstrap/Table';
 import Link from 'next/link';
 import Button from 'react-bootstrap/Button';
 import { Container, Form, Row } from 'react-bootstrap';
 import { Task } from '../interfaces/task';
+import { ToastContext } from '../context';
 
 const IndexPage: NextPage = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
+
+  const showToast = useContext(ToastContext);
 
   useEffect(() => {
     fetchTodos();
@@ -32,8 +34,10 @@ const IndexPage: NextPage = () => {
       });
       const data = await response.json();
       console.log('Task deleted:', data);
+      showToast({ msg: 'Task deleted succesfully' });
       fetchTodos();
     } catch (error) {
+      showToast({ msg: 'Error, try again', type: 'error' });
       console.error('Error deleting task:', error);
     }
   };
@@ -84,6 +88,7 @@ const IndexPage: NextPage = () => {
                 <td>
                   <Form.Check
                     type="checkbox"
+                    label="Status"
                     name="is_complete"
                     checked={!!task.is_complete}
                     readOnly

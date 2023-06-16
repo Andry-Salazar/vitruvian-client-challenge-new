@@ -1,12 +1,14 @@
 import { useRouter } from 'next/router';
-import { FC } from 'react';
+import { FC, useContext } from 'react';
 import { Task } from '../interfaces/task';
 import { useState, useEffect } from 'react';
 import { Container, Row } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
+import { ToastContext } from '../context';
 
 interface Props {
   id?: string;
+  show: boolean;
 }
 
 const CustomerForm: FC<Props> = ({ id }) => {
@@ -18,6 +20,8 @@ const CustomerForm: FC<Props> = ({ id }) => {
     autor: '',
     is_complete: 0,
   });
+
+  const showToast = useContext(ToastContext);
 
   useEffect(() => {
     if (id) {
@@ -55,6 +59,8 @@ const CustomerForm: FC<Props> = ({ id }) => {
       });
       const data = await response.json();
       console.log('Task saved:', data);
+
+      showToast({ msg: 'Task saved succesfully' });
 
       router.push('/');
     } catch (error) {
