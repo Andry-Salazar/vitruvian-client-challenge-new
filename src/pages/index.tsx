@@ -99,7 +99,7 @@ const IndexPage: NextPage = () => {
                 >
                   <Link href={`/task/${task.id}`}>
                     <Button variant="outline-success">
-                      <i className="bi bi-pencil-square"></i>Edit
+                      <i className="bi bi-pencil-square"></i> Edit
                     </Button>
                   </Link>
                 </td>
@@ -114,7 +114,7 @@ const IndexPage: NextPage = () => {
                     variant="outline-danger"
                     onClick={() => deleteTask(task.id)}
                   >
-                    <i className="bi bi-trash-fill"></i>Delete
+                    <i className="bi bi-trash-fill"></i> Delete
                   </Button>
                 </td>
               </tr>
